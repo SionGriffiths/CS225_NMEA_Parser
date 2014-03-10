@@ -3,8 +3,14 @@
  *         Date: 09/03/14
  *         Time: 12:37
  */
-public interface Sentence {
+public abstract class Sentence {
 
-  public void parseSentence(String sentence);
+  protected String[] data;
+
+  protected String[] getData(){
+    return data;
+  }
+
+
 
 }

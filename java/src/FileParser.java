@@ -19,11 +19,11 @@ public class FileParser {
 
   private ArrayList<String> sentences;
 
-  public FileParser(){
-    sentences = new ArrayList<String>();
-  }
+  public FileParser(){}
 
   public ArrayList<String> readFile(String  fileName){
+    sentences = new ArrayList<String>();
+
     try {
       file = new File(fileName);
       bRead = new BufferedReader(new FileReader(file));
