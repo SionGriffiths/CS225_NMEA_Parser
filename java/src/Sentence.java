@@ -5,5 +5,6 @@
  */
 public interface Sentence {
 
+  public void parseSentence(String sentence);
 
 }
