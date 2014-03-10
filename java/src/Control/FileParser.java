@@ -1,5 +1,7 @@
+package Control;
+
 import java.io.*;
-import java.util.ArrayList;
+
 
 /**
  * @author Siôn Griffiths - sig2@aber.ac.uk
@@ -17,11 +19,49 @@ public class FileParser {
   /**A String to hold each line of the file, initialised to empty*/
   private String line ="";
 
-  private ArrayList<String> sentences;
+//  private ArrayList<String> sentences;
 
-  public FileParser(){}
+  public FileParser(){
 
-  public ArrayList<String> readFile(String  fileName){
+  }
+
+
+  public void setFile(String fileName){
+    file = new File(fileName);
+    try {
+      bRead = new BufferedReader(new FileReader(file));
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public String readLine(){
+
+
+    try {
+      line = bRead.readLine();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+
+    if(line == null){
+      try {
+        bRead.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+
+    return line;
+  }
+
+}
+
+
+
+
+/*public ArrayList<String> readFile(String  fileName){
     sentences = new ArrayList<String>();
 
     try {
@@ -40,8 +80,4 @@ public class FileParser {
     }
 
     return sentences;
-  }
-
-
-
-}
+  }*/
