@@ -14,13 +14,13 @@ public class GGA extends Sentence {
   }
 
   public GPSposition makeGPSposition(){
-    int time = Integer.parseInt(data[1]);
+
     float lat = Float.parseFloat(data[2]);
     float lng = Float.parseFloat(data[4]);
     float elevation = Float.parseFloat(data[9]);
     lat /= 100;
     lng /= 100;
-    GPSposition gps = new GPSposition(time,lat, lng );
+    GPSposition gps = new GPSposition(lat, lng );
     gps.setElevation(elevation);
 
 

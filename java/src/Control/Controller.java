@@ -37,6 +37,7 @@ public class Controller {
         break;
       case "$GPRMC" :
         sentence = new RMC(parts);
+        ((RMC) sentence).makeTime();
         break;
       case "$GPGSV" :
         sentence = new GSV(parts);

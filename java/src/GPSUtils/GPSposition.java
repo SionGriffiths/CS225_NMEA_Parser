@@ -13,8 +13,8 @@ public class GPSposition {
   private int time;
   private int date;
 
-  public GPSposition(int time, float lat, float lng ){
-    this.time = time;
+  public GPSposition(float lat, float lng ){
+
     this.lat = lat;
     this.lng = lng;
 
