@@ -3,5 +3,9 @@
  *         Date: 09/03/14
  *         Time: 12:38
  */
-public class ZDA {
+public class ZDA implements Sentence{
+  @Override
+  public void parseSentence(String sentence) {
+
+  }
 }

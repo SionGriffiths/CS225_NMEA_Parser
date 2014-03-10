@@ -3,5 +3,9 @@
  *         Date: 09/03/14
  *         Time: 12:37
  */
-public class RMC {
+public class RMC implements Sentence {
+  @Override
+  public void parseSentence(String sentence) {
+
+  }
 }

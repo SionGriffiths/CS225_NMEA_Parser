@@ -3,5 +3,9 @@
  *         Date: 09/03/14
  *         Time: 12:37
  */
-public class GSV {
+public class GSV implements Sentence {
+  @Override
+  public void parseSentence(String sentence) {
+
+  }
 }
