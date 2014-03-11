@@ -32,8 +32,8 @@ public class Controller {
   public void run(){
 
     String input;
-    while((input = s1.getNext()) != null){
-      parseSentence(input, s1);
+    while((input = s2.getNext()) != null){
+      parseSentence(input, s2);
       count++;
     }
     System.out.println(count);
@@ -62,6 +62,7 @@ public class Controller {
 
       case "$GPGSV" :
         sentence = new GSV(parts, stream);
+
         break;
 
       case "$GPZDA" :

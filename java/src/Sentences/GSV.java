@@ -19,13 +19,14 @@ public class GSV extends Sentence {
 
   @Override
   protected void updateStream(Stream stream) {
+
     int numLines = Integer.parseInt(sentenceData[1]);
     int goodSNRcount = 0;
     ArrayList<String[]> GSVlines = new ArrayList<String []>();
     GSVlines.add(sentenceData);
-    System.out.println("-------");
+
     for(int i = 1; i < numLines; i++){
-      String[] temp = stream.getNext().split("[,*]");;
+      String[] temp = stream.getNext().split("[,*]");
       GSVlines.add(temp);
     }
 
@@ -40,9 +41,8 @@ public class GSV extends Sentence {
       }
 
     }
-    if(goodSNRcount >=3){
-      stream.setStreamQuality(true);
-    }
+
+    stream.setIsGoodFix(goodSNRcount >=3);
 
   }
 }

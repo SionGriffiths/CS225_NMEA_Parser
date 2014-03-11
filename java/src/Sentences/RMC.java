@@ -10,8 +10,12 @@ import Control.Stream;
 public class RMC extends Sentence {
 
 
+  private float lat;
+  private float lng;
+
   public RMC(String[] input, Stream stream){
     sentenceData = input;
+    makeGPSposition();
     updateStream(stream);
   }
 
@@ -23,10 +27,18 @@ public class RMC extends Sentence {
     return sentenceData[9];
   }
 
+  public void makeGPSposition(){
+    lat = Float.parseFloat(sentenceData[3]);
+    lng = Float.parseFloat(sentenceData[5]);
+    lat /= 100;
+    lng /= 100;
+  }
+
   @Override
   protected void updateStream(Stream stream) {
    stream.setTime(makeTime());
    stream.setDate(makeDate());
    stream.updateTime();
+   stream.updateLatLong(lat,lng);
   }
 }

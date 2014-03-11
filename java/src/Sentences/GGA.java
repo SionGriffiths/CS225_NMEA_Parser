@@ -1,7 +1,7 @@
 package Sentences;
 
 import Control.Stream;
-import GPSUtils.GPSposition;
+
 
 /**
  * @author Siôn Griffiths - sig2@aber.ac.uk
@@ -10,27 +10,33 @@ import GPSUtils.GPSposition;
  */
 public class GGA extends Sentence {
 
+  private float lat;
+  private float lng;
+  private float elevation;
+
   public GGA(String[] input,  Stream stream){
     sentenceData = input;
+    makeGPSposition();
     updateStream(stream);
   }
 
-  public GPSposition makeGPSposition(){
+  private String makeTime(){
+    return sentenceData[1];
+  }
 
-    float lat = Float.parseFloat(sentenceData[2]);
-    float lng = Float.parseFloat(sentenceData[4]);
-    float elevation = Float.parseFloat(sentenceData[9]);
+  public void makeGPSposition(){
+    lat = Float.parseFloat(sentenceData[2]);
+    lng = Float.parseFloat(sentenceData[4]);
+    elevation = Float.parseFloat(sentenceData[9]);
     lat /= 100;
     lng /= 100;
-    GPSposition gps = new GPSposition(lat, lng );
-    gps.setElevation(elevation);
-
-
-    return gps;
   }
 
   @Override
   protected void updateStream(Stream stream) {
-
+    stream.updateLatLong(lat, lng);
+    stream.updateElev(elevation);
+    stream.setTime(makeTime());
+    stream.updateTime();
   }
 }

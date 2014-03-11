@@ -56,11 +56,6 @@ public class Stream {
     }
     streamTime.setTime(initialDate);
   }
-/*
-  public String timeTest(){
-    return streamTime.toString();
-  }
-*/
 
   public String getNext(){
     return fp.readLine();
@@ -83,10 +78,11 @@ public class Stream {
     this.elevOffset = elevOffset;
   }
 
-  public boolean getStreamQuality(){
+  public boolean getIsGoodFix(){
     return goodFix;
+
   }
-  public void setStreamQuality(boolean fix){
+  public void setIsGoodFix(boolean fix){
     goodFix = fix;
   }
   public void setTime(String time){
