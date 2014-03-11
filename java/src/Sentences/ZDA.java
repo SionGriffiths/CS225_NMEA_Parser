@@ -19,12 +19,7 @@ public class ZDA extends Sentence{
   }
 
   public String makeDate(){
-    StringBuffer sb = new StringBuffer();
-    sb.append(sentenceData[2]);
-    sb.append(sentenceData[3]);
-    sb.append(sentenceData[4].charAt(2));
-    sb.append(sentenceData[4].charAt(3));
-    return sb.toString();
+    return sentenceData[2] + sentenceData[3] + sentenceData[4].charAt(2) + sentenceData[4].charAt(3);
   }
 
   @Override

@@ -1,5 +1,7 @@
 package GPSUtils;
 
+import java.util.Calendar;
+
 /**
  * @author Siôn Griffiths - sig2@aber.ac.uk
  *         Date: 09/03/14
@@ -10,60 +12,17 @@ public class GPSposition {
   private float lat;
   private float lng;
   private float elevation;
-  private int time;
-  private int date;
+  private Calendar time;
 
-  public GPSposition(float lat, float lng ){
+  public GPSposition(float lat, float lng, float elevation, Calendar time ){
 
     this.lat = lat;
     this.lng = lng;
-
-  }
-
-  public String toString(){
-    return time +" " + lat + " " + lng;
-  }
-
-  public float getLat() {
-    return lat;
-  }
-
-  public void setLat(float lat) {
-    this.lat = lat;
-  }
-
-  public float getLng() {
-    return lng;
-  }
-
-  public void setLng(float lng) {
-    this.lng = lng;
-  }
-
-  public float getElevation() {
-    return elevation;
-  }
-
-  public void setElevation(float elevation) {
     this.elevation = elevation;
-  }
-
-  public int getTime() {
-    return time;
-  }
-
-  public void setTime(int time) {
     this.time = time;
   }
 
-  public int getDate() {
-    return date;
+  public String toString(){
+    return time.getTime()+  ", " + lat + ", " + lng + ", " + elevation;
   }
-
-  public void setDate(int date) {
-    this.date = date;
-  }
-
-
-
 }

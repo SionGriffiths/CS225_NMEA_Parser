@@ -1,5 +1,7 @@
 package Control;
 
+import GPSUtils.GPSposition;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -76,6 +78,11 @@ public class Stream {
 
   public void updateElevOffset(float elevOffset){
     this.elevOffset = elevOffset;
+  }
+
+  public GPSposition makeGPS(){
+    GPSposition gps = new GPSposition(currentLat, currentLng, currentElev, streamTime);
+    return gps;
   }
 
   public boolean getIsGoodFix(){

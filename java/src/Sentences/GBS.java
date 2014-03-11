@@ -23,5 +23,5 @@ public class GBS extends Sentence {
     stream.setTime(makeTime());
     stream.updateTime();
   }
-  
+
 }
