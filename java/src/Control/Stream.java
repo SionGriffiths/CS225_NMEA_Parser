@@ -18,7 +18,8 @@ public class Stream {
   private FileParser fp;
   private Calendar streamTime;
 
-  private boolean goodFix = false;
+  private boolean goodFix;
+  private boolean GSAfix;
 
   private String currentTime;
   private String currentDate;
@@ -85,6 +86,12 @@ public class Stream {
     return gps;
   }
 
+  public void setGSAfix(boolean gsaFix){
+    GSAfix = gsaFix;
+  }
+  public boolean getGSAfix(){
+    return GSAfix;
+  }
   public boolean getIsGoodFix(){
     return goodFix;
 

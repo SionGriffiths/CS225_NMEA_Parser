@@ -34,7 +34,7 @@ public class Controller {
     while((input = s2.getNext()) != null){
       parseSentence(input, s2);
     }
-      
+
   }
 
   public void parseSentence(String inputLine, Stream stream){
