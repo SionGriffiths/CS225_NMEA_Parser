@@ -1,6 +1,10 @@
 package Control;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @author Siôn Griffiths - sig2@aber.ac.uk
@@ -20,6 +24,20 @@ public class Stream {
   public Stream(String fileName){
     fp = new FileParser();
     fp.setFile(fileName);
+
+
+  }
+
+  private void initTime(){
+    streamTime = new GregorianCalendar();
+    SimpleDateFormat df = new SimpleDateFormat("hh-mm-ss");
+    Date initialTime = null;
+    try {
+      initialTime = df.parse("00-00-00");
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    streamTime.setTime(initialTime);
   }
 
   public String getNext(){

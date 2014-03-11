@@ -14,7 +14,7 @@ public class RMC extends Sentence {
 
   }
 
-  public void makeTime(){
+  public String makeTime(){
 
     StringBuffer sb = new StringBuffer();
     sb.append(data[1].charAt(0));
@@ -26,8 +26,8 @@ public class RMC extends Sentence {
     sb.append(data[1].charAt(4));
     sb.append(data[1].charAt(5));
 
-    System.out.println(sb.toString());
 
+    return sb.toString();
   }
 
   public GPSposition makeGPSposition(){
