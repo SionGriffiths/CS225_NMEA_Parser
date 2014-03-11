@@ -17,7 +17,9 @@ public class Controller {
 
   private boolean goodFix = false;
   private ArrayList<GPSposition> gps;
-  int count = 0;
+
+  //debug shenanigans!
+  public static int count = 0;
 
 
   public Controller(){
@@ -30,8 +32,8 @@ public class Controller {
   public void run(){
 
     String input;
-    while((input = s2.getNext()) != null){
-      parseSentence(input, s2);
+    while((input = s1.getNext()) != null){
+      parseSentence(input, s1);
       count++;
     }
     System.out.println(count);

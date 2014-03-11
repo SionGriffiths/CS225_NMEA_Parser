@@ -1,6 +1,9 @@
 package Sentences;
 
+
 import Control.Stream;
+
+import java.util.ArrayList;
 
 /**
  * @author Siôn Griffiths - sig2@aber.ac.uk
@@ -16,6 +19,30 @@ public class GSV extends Sentence {
 
   @Override
   protected void updateStream(Stream stream) {
+    int numLines = Integer.parseInt(sentenceData[1]);
+    int goodSNRcount = 0;
+    ArrayList<String[]> GSVlines = new ArrayList<String []>();
+    GSVlines.add(sentenceData);
+    System.out.println("-------");
+    for(int i = 1; i < numLines; i++){
+      String[] temp = stream.getNext().split("[,*]");;
+      GSVlines.add(temp);
+    }
+
+    for(String[] sData : GSVlines){
+      for(int i = 7; i < sData.length; i+=4){
+        if(!(sData[i].equals(""))){
+          int snrValue = Integer.parseInt(sData[i]);
+          if(snrValue >= 35){
+            goodSNRcount++;
+          }
+        }
+      }
+
+    }
+    if(goodSNRcount >=3){
+      stream.setStreamQuality(true);
+    }
 
   }
 }
