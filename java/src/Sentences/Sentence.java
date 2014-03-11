@@ -1,5 +1,7 @@
 package Sentences;
 
+import Control.Stream;
+
 /**
  * @author Siôn Griffiths - sig2@aber.ac.uk
  *         Date: 09/03/14
@@ -7,12 +9,14 @@ package Sentences;
  */
 public abstract class Sentence {
 
-  protected String[] data;
+  protected String[] sentenceData;
+  //protected Stream stream;
 
-  protected String[] getData(){
-    return data;
+  protected abstract void updateStream(Stream stream);
+
+  protected String[] getSentenceData(){
+    return sentenceData;
   }
-
 
 
 }

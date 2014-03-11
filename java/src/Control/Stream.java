@@ -13,37 +13,67 @@ import java.util.GregorianCalendar;
  */
 public class Stream {
 
+  private FileParser fp;
   private Calendar streamTime;
+
   private boolean goodFix = false;
+
+  private String currentTime;
+  private String currentDate;
+
+  private float currentLat = 0;
+  private float currentLng = 0;
+  private float currentElev = 0;
+
   private float latOffset = 0;
   private float lngOffset = 0;
   private float elevOffset = 0;
-  private FileParser fp;
 
 
   public Stream(String fileName){
     fp = new FileParser();
     fp.setFile(fileName);
-
-
+    initTime();
   }
 
   private void initTime(){
     streamTime = new GregorianCalendar();
-    SimpleDateFormat df = new SimpleDateFormat("hh-mm-ss");
-    Date initialTime = null;
+
+    //init with debug values
+    currentTime = "110203";
+    currentDate = "040506";
+    updateTime();
+  }
+
+  public void updateTime(){
+
+    SimpleDateFormat df = new SimpleDateFormat("ddMMyy HHmmss");
+    Date initialDate = null;
     try {
-      initialTime = df.parse("00-00-00");
+      initialDate = df.parse(currentDate + " " + currentTime);
     } catch (ParseException e) {
       e.printStackTrace();
     }
-    streamTime.setTime(initialTime);
+    streamTime.setTime(initialDate);
   }
+/*
+  public String timeTest(){
+    return streamTime.toString();
+  }
+*/
 
   public String getNext(){
     return fp.readLine();
   }
 
+  public void updateLatLong(float lat, float lng){
+    currentLat = lat;
+    currentLng = lng;
+  }
+
+  public void updateElev(float elev){
+    currentElev = elev;
+  }
   public void updateLatLongOffest(float latOffset, float lngOffset){
     this.latOffset = latOffset;
     this.lngOffset = lngOffset;
@@ -58,5 +88,11 @@ public class Stream {
   }
   public void setStreamQuality(boolean fix){
     goodFix = fix;
+  }
+  public void setTime(String time){
+    currentTime = time;
+  }
+  public void setDate(String date){
+    currentDate = date;
   }
 }

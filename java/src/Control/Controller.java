@@ -12,14 +12,33 @@ import java.util.ArrayList;
  */
 public class Controller {
 
+  private Stream s1;
+  private Stream s2;
+
   private boolean goodFix = false;
   private ArrayList<GPSposition> gps;
+  int count = 0;
+
 
   public Controller(){
+    s1 = new Stream("dataFiles/gps_1.dat");
+    s2 = new Stream("dataFiles/gps_2.dat");
     gps = new ArrayList<GPSposition>();
+
   }
 
-  public Sentence parseSentence(String inputLine){
+  public void run(){
+
+    String input;
+    while((input = s2.getNext()) != null){
+      parseSentence(input, s2);
+      count++;
+    }
+    System.out.println(count);
+
+  }
+
+  public void parseSentence(String inputLine, Stream stream){
 
     String[] parts = inputLine.split("[,*]");
 
@@ -28,26 +47,33 @@ public class Controller {
 
     switch(type){
       case "$GPGSA" :
-        sentence = new GSA(parts);
-        goodFix = ((GSA) sentence).goodfix();
+        sentence = new GSA(parts, stream);
         break;
-      case "$GPGGA" :
-        sentence = new GGA(parts);
 
+      case "$GPGGA" :
+        sentence = new GGA(parts, stream);
         break;
+
       case "$GPRMC" :
-        sentence = new RMC(parts);
-        ((RMC) sentence).makeTime();
+        sentence = new RMC(parts, stream);
         break;
+
       case "$GPGSV" :
-        sentence = new GSV(parts);
+        sentence = new GSV(parts, stream);
         break;
+
       case "$GPZDA" :
-        sentence = new ZDA(parts);
+        sentence = new ZDA(parts, stream);
         break;
+
+      case "$GPGBS" :
+        sentence = new GBS(parts, stream);
+        break;
+
+      default:
+        System.err.println("Unrecognised sentence: " + type + " : " + inputLine);
     }
 
-    return sentence;
   }
 
 }
