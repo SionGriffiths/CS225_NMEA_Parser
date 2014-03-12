@@ -28,6 +28,7 @@ public class GSV extends Sentence {
     for(int i = 1; i < numLines; i++){
       String[] temp = stream.getNext().split("[,*]");
       GSVlines.add(temp);
+      stream.count++;
     }
 
     for(String[] sData : GSVlines){

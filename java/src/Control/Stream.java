@@ -32,7 +32,8 @@ public class Stream {
   private float lngOffset = 0;
   private float elevOffset = 0;
 
-  public boolean END_OF_STREAM = false;
+
+  public int count = 0;
 
   public Stream(String fileName){
     fp = new FileParser();
@@ -62,21 +63,8 @@ public class Stream {
   }
 
   public String getNext(){
-  /*String retValue;
-    if(!((retValue = fp.readLine()).equals("EOF"))){
-      return retValue;
-    }else{
-      return null;
-    }*/
-    return fp.readLine();
+      return fp.readLine();
   }
-
-  /*String retValue;
-    if((retValue = fp.readLine()) != null){
-      return retValue;
-    }else{
-      return null;
-    }*/
 
   public void updateLatLong(float lat, float lng){
     currentLat = lat;

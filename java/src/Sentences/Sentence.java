@@ -10,7 +10,6 @@ import Control.Stream;
 public abstract class Sentence {
 
   protected String[] sentenceData;
-  //protected Stream stream;
 
   protected abstract void updateStream(Stream stream);
 
