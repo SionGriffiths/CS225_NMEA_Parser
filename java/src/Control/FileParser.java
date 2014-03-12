@@ -37,23 +37,28 @@ public class FileParser {
 
   public String readLine(){
 
-
-    try {
-      line = bRead.readLine();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-
-    if(line == null){
+    if(bRead == null){
+      return null;
+    }else{
       try {
-        bRead.close();
+        line = bRead.readLine();
       } catch (IOException e) {
         e.printStackTrace();
       }
-    }
 
-    return line;
+
+      if(line == null){
+        try {
+          bRead.close();
+          bRead = null;
+          System.err.println("END OF FILE");
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+
+      return line;
+    }
   }
 
 }

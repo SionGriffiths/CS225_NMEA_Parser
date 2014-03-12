@@ -17,8 +17,10 @@ public class Controller {
 
   private boolean goodFix = false;
   private ArrayList<GPSposition> gps;
-
-
+  private boolean stream1 = false;
+  private boolean stream2 = false;
+  int s1count = 0;
+  int s2count = 0;
 
 
   public Controller(){
@@ -30,11 +32,57 @@ public class Controller {
 
   public void run(){
 
-    String input;
-    while((input = s2.getNext()) != null){
-      parseSentence(input, s2);
-    }
+    String input1;
+    String input2;
 
+    for(int i = 0; i < 2900; i++){
+
+
+
+
+      if(s1.getStreamTime().compareTo(s2.getStreamTime()) < 0){
+        System.out.println("S1 early");
+        if((input1 = s1.getNext())!=null){
+          parseSentence(input1, s1);
+          s1count++;
+        }
+      }else  if(s1.getStreamTime().compareTo(s2.getStreamTime()) > 0){
+        System.out.println("S2 early");
+        if((input2 = s2.getNext())!=null){
+          parseSentence(input2, s2);
+          s2count++;
+        }
+      }else{
+        System.out.println("Same");
+        if((input1 = s1.getNext())!=null){
+          parseSentence(input1, s1);
+          s1count++;
+        }
+        if((input2 = s2.getNext())!=null){
+          parseSentence(input2, s2);}
+        s2count++;
+      }
+        System.out.println("S1 : " + s1count + " | S2 : "+ s2count);
+    }
+   /*while((input2 = s2.getNext()) != null){
+      parseSentence(input2, s2);
+      stream2 = true;
+    }*/
+
+    /*do{
+      if((input2 = s2.getNext()) != null){
+        parseSentence(input2, s2);
+        stream2 = true;
+      }else{
+        stream2 = false;
+      }
+      if((input1 = s1.getNext()) != null){
+        parseSentence(input1, s1);
+        stream1 = true;
+      }else{
+        stream1 = false;
+      }
+    }while(stream1 || stream2);*/
   }
 
   public void parseSentence(String inputLine, Stream stream){
@@ -71,7 +119,7 @@ public class Controller {
         break;
 
       default:
-        System.err.println("Unrecognised sentence: " + type + " : " + inputLine);
+        System.err.println("Unrecognised sentence : " + inputLine);
     }
 
   }

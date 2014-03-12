@@ -32,6 +32,7 @@ public class Stream {
   private float lngOffset = 0;
   private float elevOffset = 0;
 
+  public boolean END_OF_STREAM = false;
 
   public Stream(String fileName){
     fp = new FileParser();
@@ -61,8 +62,21 @@ public class Stream {
   }
 
   public String getNext(){
+  /*String retValue;
+    if(!((retValue = fp.readLine()).equals("EOF"))){
+      return retValue;
+    }else{
+      return null;
+    }*/
     return fp.readLine();
   }
+
+  /*String retValue;
+    if((retValue = fp.readLine()) != null){
+      return retValue;
+    }else{
+      return null;
+    }*/
 
   public void updateLatLong(float lat, float lng){
     currentLat = lat;
@@ -85,7 +99,9 @@ public class Stream {
     GPSposition gps = new GPSposition(currentLat, currentLng, currentElev, streamTime);
     return gps;
   }
-
+  public Calendar getStreamTime(){
+    return streamTime;
+  }
   public void setGSAfix(boolean gsaFix){
     GSAfix = gsaFix;
   }
@@ -94,7 +110,6 @@ public class Stream {
   }
   public boolean getIsGoodFix(){
     return goodFix;
-
   }
   public void setIsGoodFix(boolean fix){
     goodFix = fix;
