@@ -17,6 +17,7 @@ public class Stream {
 
   private FileParser fp;
   private Calendar streamTime;
+//  private Calendar lastFixTime;
 
   private boolean goodFix;
   private boolean GSAfix;
@@ -43,14 +44,15 @@ public class Stream {
 
   private void initTime(){
     streamTime = new GregorianCalendar();
-
+//    lastFixTime = new GregorianCalendar();
     //init with debug values
     currentTime = "110203";
     currentDate = "040506";
-    updateTime();
+    updateTime(streamTime);
+//    updateTime(lastFixTime);
   }
 
-  public void updateTime(){
+  public void updateTime(Calendar timeToUpdate){
 
     SimpleDateFormat df = new SimpleDateFormat("ddMMyy HHmmss");
     Date initialDate = null;
@@ -59,7 +61,8 @@ public class Stream {
     } catch (ParseException e) {
       e.printStackTrace();
     }
-    streamTime.setTime(initialDate);
+    timeToUpdate.setTime(initialDate);
+
   }
 
   public String getNext(){
@@ -93,12 +96,19 @@ public class Stream {
   }
 
   public GPSposition makeGPS(){
-    GPSposition gps = new GPSposition(currentLat, currentLng, currentElev, streamTime);
+    currentLat += latOffset;
+    currentLng += lngOffset;
+    currentElev += elevOffset;
+    GPSposition gps = new GPSposition(currentLat, currentLng, currentElev, streamTime.clone());
+//    updateTime(lastFixTime);
     return gps;
   }
   public Calendar getStreamTime(){
     return streamTime;
   }
+  /*public Calendar getLastFixTime(){
+    return lastFixTime;
+  }*/
   public void setGSAfix(boolean gsaFix){
     GSAfix = gsaFix;
   }
@@ -117,4 +127,18 @@ public class Stream {
   public void setDate(String date){
     currentDate = date;
   }
+
+  public float getCurrentLat() {
+    return currentLat;
+  }
+
+  public float getCurrentElev(){
+    return currentElev;
+  }
+
+  public float getCurrentLng() {
+    return currentLng;
+  }
+
+
 }

@@ -37,6 +37,6 @@ public class GGA extends Sentence {
     stream.updateLatLong(lat, lng);
     stream.updateElev(elevation);
     stream.setTime(makeTime());
-    stream.updateTime();
+    stream.updateTime(stream.getStreamTime());
   }
 }

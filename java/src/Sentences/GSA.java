@@ -15,7 +15,11 @@ public class GSA extends Sentence {
     updateStream(stream);
   }
 
-  public boolean goodfix(){
+
+
+
+  @Override
+  protected void updateStream(Stream stream) {
     int satCount = 0;
 
     for(int i = 3; i < 15; i++){
@@ -24,12 +28,6 @@ public class GSA extends Sentence {
       }
     }
     int total = 12 - satCount;
-    return total > 3 && sentenceData[1].equals("3");
-  }
-
-
-  @Override
-  protected void updateStream(Stream stream) {
-
+    stream.setGSAfix(total > 3 && sentenceData[1].equals("3"));
   }
 }

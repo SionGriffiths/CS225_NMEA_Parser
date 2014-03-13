@@ -14,12 +14,12 @@ public class GPSposition {
   private float elevation;
   private Calendar time;
 
-  public GPSposition(float lat, float lng, float elevation, Calendar time ){
+  public GPSposition(float lat, float lng, float elevation, Object time ){
 
     this.lat = lat;
     this.lng = lng;
     this.elevation = elevation;
-    this.time = time;
+    this.time = (Calendar)time;
   }
 
   public String toString(){

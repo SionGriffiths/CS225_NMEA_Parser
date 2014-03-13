@@ -21,7 +21,7 @@ public class GBS extends Sentence {
   @Override
   protected void updateStream(Stream stream) {
     stream.setTime(makeTime());
-    stream.updateTime();
+    stream.updateTime(stream.getStreamTime());
   }
 
 }

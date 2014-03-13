@@ -26,6 +26,6 @@ public class ZDA extends Sentence{
   protected void updateStream(Stream stream) {
     stream.setTime(makeTime());
     stream.setDate(makeDate());
-    stream.updateTime();
+    stream.updateTime(stream.getStreamTime());
   }
 }
