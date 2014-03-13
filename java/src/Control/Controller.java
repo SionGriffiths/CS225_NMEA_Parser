@@ -29,10 +29,7 @@ public class Controller {
 
   public void run(){
     while(!(s1.isEndOfStream())){
-
       syncStream(s1,s2);
-
-
     }
     System.out.println("S1 : " + s1.count + " | S2 : " + s2.count);
     System.out.println("gps fixes : " + gps.size());
@@ -93,21 +90,21 @@ public class Controller {
 
     while(!synced){
       checkForNewFix();
-      if(stream1.getStreamTime().compareTo(stream2.getStreamTime()) > 0){
-        parseSentence(stream2);
-
-        System.out.println("s1 After s2");
-      }else if(stream1.getStreamTime().compareTo(stream2.getStreamTime()) < 0){
+      if(stream1.getStreamTime().compareTo(stream2.getStreamTime()) < 0){
         parseSentence(stream1);
-
         System.out.println("s1 Before s2");
+
+      }else if (stream1.getStreamTime().compareTo(stream2.getStreamTime()) > 0){
+        parseSentence(stream2);
+        System.out.println("s1 After s2");
+
       }else{
         synced = true;
         calculateOffset(stream1, stream2);
         parseSentence(stream1);
 
         parseSentence(stream2);
-        
+
         System.out.println("synced");
       }
     }
