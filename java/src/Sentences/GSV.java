@@ -43,6 +43,7 @@ public class GSV extends Sentence {
 
     }
 
+
     stream.setIsGoodFix(goodSNRcount >=3);
 
   }

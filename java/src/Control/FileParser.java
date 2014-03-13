@@ -21,8 +21,8 @@ public class FileParser {
 
 //  private ArrayList<String> sentences;
 
-  public FileParser(){
-
+  public FileParser(String fileName){
+    setFile(fileName);
   }
 
 
@@ -51,7 +51,7 @@ public class FileParser {
         try {
           bRead.close();
           bRead = null;
-          System.err.println("END OF FILE");
+
         } catch (IOException e) {
           e.printStackTrace();
         }

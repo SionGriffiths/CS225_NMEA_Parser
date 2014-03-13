@@ -23,12 +23,17 @@ public class Controller {
   }
 
   public void run(){
-    for(int i = 0; i < 2900; i++){
-
+    while(!(s1.isEndOfStream())){
       parseSentence(s1);
+
+      //time constrains m8!
+      if(s1.isGoodFix()){
+        gps.add(s1.makeGPS());
+      }
       parseSentence(s2);
     }
-   System.out.println("S1 : " + s1.count + " | S2 : " + s2.count);
+    System.out.println("S1 : " + s1.count + " | S2 : " + s2.count);
+    System.out.println("gps fixes : " + gps.size());
   }
 
   public void parseSentence(Stream stream){
@@ -41,19 +46,19 @@ public class Controller {
 
       switch(type){
         case "$GPGSA" :
-         new GSA(parts, stream);
+          new GSA(parts, stream);
           break;
 
         case "$GPGGA" :
-         new GGA(parts, stream);
+          new GGA(parts, stream);
           break;
 
         case "$GPRMC" :
-         new RMC(parts, stream);
+          new RMC(parts, stream);
           break;
 
         case "$GPGSV" :
-         new GSV(parts, stream);
+          new GSV(parts, stream);
           break;
 
         case "$GPZDA" :

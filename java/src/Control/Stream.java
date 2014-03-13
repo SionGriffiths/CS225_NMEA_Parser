@@ -20,6 +20,7 @@ public class Stream {
 
   private boolean goodFix;
   private boolean GSAfix;
+  private boolean endOfStream = false;
 
   private String currentTime;
   private String currentDate;
@@ -36,8 +37,7 @@ public class Stream {
   public int count = 0;
 
   public Stream(String fileName){
-    fp = new FileParser();
-    fp.setFile(fileName);
+    fp = new FileParser(fileName);
     initTime();
   }
 
@@ -63,7 +63,16 @@ public class Stream {
   }
 
   public String getNext(){
-      return fp.readLine();
+    String retValue;
+
+    if((retValue = fp.readLine())==null){
+      endOfStream = true;
+    }
+      return retValue;
+  }
+
+  public boolean isEndOfStream(){
+    return endOfStream;
   }
 
   public void updateLatLong(float lat, float lng){
@@ -96,7 +105,7 @@ public class Stream {
   public boolean getGSAfix(){
     return GSAfix;
   }
-  public boolean getIsGoodFix(){
+  public boolean isGoodFix(){
     return goodFix;
   }
   public void setIsGoodFix(boolean fix){
