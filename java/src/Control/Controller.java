@@ -20,6 +20,8 @@ public class Controller {
 
   private boolean fixAvailable;
 
+  private int s1count =0;
+  private int s2count = 0;
 
   public Controller(){
     s1 = new Stream("dataFiles/gps_1.dat");
@@ -31,7 +33,7 @@ public class Controller {
     while(!(s1.isEndOfStream())){
       syncStream(s1,s2);
     }
-    System.out.println("S1 : " + s1.count + " | S2 : " + s2.count);
+    System.out.println("S1 : " + s1count + " | S2 : " + s2count);
     System.out.println("gps fixes : " + gps.size());
     for(GPSposition g : gps){
       System.out.println(g.toString());
@@ -79,11 +81,6 @@ public class Controller {
     }
   }
 
-  private long timeDiff(Calendar time1, Calendar time2){
-    long now = time1.getTimeInMillis();
-    long passed = now -  time2.getTimeInMillis();
-    return passed;
-  }
 
   private void syncStream(Stream stream1, Stream stream2){
     boolean synced = false;
@@ -92,38 +89,47 @@ public class Controller {
       checkForNewFix();
       if(stream1.getStreamTime().compareTo(stream2.getStreamTime()) < 0){
         parseSentence(stream1);
-        System.out.println("s1 Before s2");
-
+        synced = false;
       }else if (stream1.getStreamTime().compareTo(stream2.getStreamTime()) > 0){
         parseSentence(stream2);
-        System.out.println("s1 After s2");
-
+        synced = false;
       }else{
         synced = true;
         calculateOffset(stream1, stream2);
         parseSentence(stream1);
-
         parseSentence(stream2);
 
-        System.out.println("synced");
       }
     }
   }
 
   private void checkForNewFix(){
     if(s1.isGoodFix()){
-      if((lastFixTime == null) || (timeDiff(s1.getStreamTime(), lastFixTime) > 1000)){
+      if((lastFixTime == null) || (s1.getStreamTime().compareTo(lastFixTime) > 0)){
         gps.add(s1.makeGPS());
-        lastFixTime = (Calendar)s1.getStreamTime().clone();
+        updateFixTime(s1);
+        s1count++;
 
       }
     }else if(s2.isGoodFix()){
-      if((lastFixTime == null) || (timeDiff(s2.getStreamTime(), lastFixTime) > 1000)){
+      if((lastFixTime == null) || (s2.getStreamTime().compareTo(lastFixTime) > 0)){
         gps.add(s2.makeGPS());
-        lastFixTime = (Calendar)s2.getStreamTime().clone();
+        updateFixTime(s2);
+        s2count++;
+      }
+
+    }
+  }
+
+  private boolean checkForGSAfix(Stream stream) {
+    if(stream.isGSAfix()){
+      if((lastFixTime == null) || (timeDiff(stream.getStreamTime(), lastFixTime) > 1000)){
+        gps.add(stream.makeGPS());
+        updateFixTime(stream);
+        return true;
       }
     }
-
+    return false;
   }
 
   private void calculateOffset(Stream stream1, Stream stream2){
@@ -134,4 +140,16 @@ public class Controller {
     stream2.updateLatLongOffest(latOffset, lngOffset);
     stream2.updateElevOffset(elevOffset);
   }
+
+  private void updateFixTime(Stream stream){
+    lastFixTime = (Calendar)stream.getStreamTime().clone();
+  }
+
+  private long timeDiff(Calendar time1, Calendar time2){
+    long now = time1.getTimeInMillis();
+    long passed = now -  time2.getTimeInMillis();
+    return passed;
+  }
+
+
 }

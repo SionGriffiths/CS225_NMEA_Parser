@@ -28,6 +28,6 @@ public class GSA extends Sentence {
       }
     }
     int total = 12 - satCount;
-    stream.setGSAfix(total > 3 && sentenceData[1].equals("3"));
+    stream.setGSAfix(total >= 3 && sentenceData[1].equals("3"));
   }
 }

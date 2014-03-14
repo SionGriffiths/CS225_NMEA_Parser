@@ -17,9 +17,8 @@ public class Stream {
 
   private FileParser fp;
   private Calendar streamTime;
-//  private Calendar lastFixTime;
 
-  private boolean goodFix;
+  private boolean goodFix = true;
   private boolean GSAfix;
   private boolean endOfStream = false;
 
@@ -44,12 +43,12 @@ public class Stream {
 
   private void initTime(){
     streamTime = new GregorianCalendar();
-//    lastFixTime = new GregorianCalendar();
-    //init with debug values
+//  lastFixTime = new GregorianCalendar();
+//  init with debug values
     currentTime = "110203";
     currentDate = "040506";
     updateTime(streamTime);
-//    updateTime(lastFixTime);
+//  updateTime(lastFixTime);
   }
 
   public void updateTime(Calendar timeToUpdate){
@@ -106,13 +105,11 @@ public class Stream {
   public Calendar getStreamTime(){
     return streamTime;
   }
-  /*public Calendar getLastFixTime(){
-    return lastFixTime;
-  }*/
+
   public void setGSAfix(boolean gsaFix){
     GSAfix = gsaFix;
   }
-  public boolean getGSAfix(){
+  public boolean isGSAfix(){
     return GSAfix;
   }
   public boolean isGoodFix(){
