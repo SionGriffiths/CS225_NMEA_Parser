@@ -2,6 +2,7 @@ package Sentences;
 
 
 import Control.Stream;
+import GPSUtils.FixType;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class GSV extends Sentence {
 
     int numLines = Integer.parseInt(sentenceData[1]);
     int goodSNRcount = 0;
+    int minSNRcount = 0;
     ArrayList<String[]> GSVlines = new ArrayList<String []>();
     GSVlines.add(sentenceData);
 
@@ -38,13 +40,22 @@ public class GSV extends Sentence {
           if(snrValue >= 35){
             goodSNRcount++;
           }
+          if(snrValue < 35 && snrValue >= 30){
+            minSNRcount++;
+          }
         }
       }
 
     }
+    if(goodSNRcount >=3){
+      stream.setFixtype(FixType.GOOD_FIX);
+    }else if(minSNRcount >= 3){
+      stream.setFixtype(FixType.MIN_FIX);
+    }else{
+      stream.setFixtype(FixType.NO_FIX);
+    }
 
-
-    stream.setIsGoodFix(goodSNRcount >=3);
+//    stream.setIsGoodFix(goodSNRcount >=3);
 
   }
 }

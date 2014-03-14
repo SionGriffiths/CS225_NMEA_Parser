@@ -1,5 +1,6 @@
 package Control;
 
+import GPSUtils.FixType;
 import GPSUtils.GPSposition;
 
 import java.text.ParseException;
@@ -7,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import static GPSUtils.FixType.*;
 
 /**
  * @author Siôn Griffiths - sig2@aber.ac.uk
@@ -33,7 +36,7 @@ public class Stream {
   private float lngOffset = 0;
   private float elevOffset = 0;
 
-
+  public FixType fixtype = FixType.NO_FIX;
   public int count = 0;
 
   public Stream(String fileName){
@@ -99,7 +102,7 @@ public class Stream {
     currentLng += lngOffset;
     currentElev += elevOffset;
     GPSposition gps = new GPSposition(currentLat, currentLng, currentElev, streamTime.clone());
-//    updateTime(lastFixTime);
+
     return gps;
   }
   public Calendar getStreamTime(){
@@ -112,11 +115,17 @@ public class Stream {
   public boolean isGSAfix(){
     return GSAfix;
   }
-  public boolean isGoodFix(){
+  /*public boolean isGoodFix(){
     return goodFix;
   }
   public void setIsGoodFix(boolean fix){
     goodFix = fix;
+  }*/
+  public void setFixtype(FixType fixtype){
+    this.fixtype = fixtype;
+  }
+  public FixType getFixtype(){
+    return fixtype;
   }
   public void setTime(String time){
     currentTime = time;

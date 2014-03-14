@@ -1,5 +1,6 @@
 package Control;
 
+import GPSUtils.FixType;
 import GPSUtils.GPSposition;
 import Sentences.*;
 
@@ -17,8 +18,6 @@ public class Controller {
   private Stream s2;
   private ArrayList<GPSposition> gps;
   private Calendar lastFixTime;
-
-  private boolean fixAvailable;
 
   private int s1count =0;
   private int s2count = 0;
@@ -104,32 +103,21 @@ public class Controller {
   }
 
   private void checkForNewFix(){
-    if(s1.isGoodFix()){
-      if((lastFixTime == null) || (s1.getStreamTime().compareTo(lastFixTime) > 0)){
-        gps.add(s1.makeGPS());
-        updateFixTime(s1);
+    if(s1.getFixtype()== FixType.GOOD_FIX){
+      makeGPSfix(s1);
+      s1count++;
+    }else if(s2.getFixtype()== FixType.GOOD_FIX){
+      makeGPSfix(s2);
+      s2count++;
+    }else{
+      if(s1.getFixtype()== FixType.MIN_FIX){
+        makeGPSfix(s1);
         s1count++;
-
-      }
-    }else if(s2.isGoodFix()){
-      if((lastFixTime == null) || (s2.getStreamTime().compareTo(lastFixTime) > 0)){
-        gps.add(s2.makeGPS());
-        updateFixTime(s2);
+      }else if(s2.getFixtype()== FixType.MIN_FIX){
+        makeGPSfix(s2);
         s2count++;
       }
-
     }
-  }
-
-  private boolean checkForGSAfix(Stream stream) {
-    if(stream.isGSAfix()){
-      if((lastFixTime == null) || (timeDiff(stream.getStreamTime(), lastFixTime) > 1000)){
-        gps.add(stream.makeGPS());
-        updateFixTime(stream);
-        return true;
-      }
-    }
-    return false;
   }
 
   private void calculateOffset(Stream stream1, Stream stream2){
@@ -141,15 +129,19 @@ public class Controller {
     stream2.updateElevOffset(elevOffset);
   }
 
+  private void makeGPSfix(Stream stream){
+    if((lastFixTime == null) || (stream.getStreamTime().compareTo(lastFixTime) > 0)){
+      gps.add(stream.makeGPS());
+      updateFixTime(stream);
+
+    }
+  }
+
   private void updateFixTime(Stream stream){
     lastFixTime = (Calendar)stream.getStreamTime().clone();
   }
 
-  private long timeDiff(Calendar time1, Calendar time2){
-    long now = time1.getTimeInMillis();
-    long passed = now -  time2.getTimeInMillis();
-    return passed;
-  }
+
 
 
 }
