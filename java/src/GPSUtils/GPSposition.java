@@ -22,7 +22,35 @@ public class GPSposition {
     this.time = (Calendar)time;
   }
 
+
   public String toString(){
-    return time.getTime()+  ", " + lat + ", " + lng + ", " + elevation;
+    return time.getTime() +  ", " + lat + ", " + lng + ", " + elevation;
+  }
+
+  public String GPXoutput(){
+    StringBuffer sb = new StringBuffer();
+
+    sb = formatTimeOutput(sb);
+
+
+    return sb.toString();
+  }
+
+  public StringBuffer formatTimeOutput(StringBuffer sb){
+
+    sb.append(time.get(Calendar.YEAR));
+    sb.append("-");
+    sb.append(time.get(Calendar.MONTH)+1);
+    sb.append("-");
+    sb.append(time.get(Calendar.DAY_OF_MONTH));
+    sb.append("T");
+    sb.append(time.get(Calendar.HOUR_OF_DAY));
+    sb.append(":");
+    sb.append(time.get(Calendar.MINUTE));
+    sb.append(":");
+    sb.append(time.get(Calendar.SECOND));
+    sb.append("Z");
+    
+    return sb;
   }
 }

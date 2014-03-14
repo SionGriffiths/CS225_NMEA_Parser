@@ -6,5 +6,5 @@ package GPSUtils;
 public enum FixType {
   NO_FIX,
   MIN_FIX,
-  GOOD_FIX;
+  GOOD_FIX
 }

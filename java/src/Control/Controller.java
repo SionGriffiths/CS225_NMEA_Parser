@@ -2,6 +2,7 @@ package Control;
 
 import GPSUtils.FixType;
 import GPSUtils.GPSposition;
+import GPSUtils.GPXmaker;
 import Sentences.*;
 
 import java.util.ArrayList;
@@ -19,9 +20,6 @@ public class Controller {
   private ArrayList<GPSposition> gps;
   private Calendar lastFixTime;
 
-  private int s1count =0;
-  private int s2count = 0;
-
   public Controller(){
     s1 = new Stream("dataFiles/gps_1.dat");
     s2 = new Stream("dataFiles/gps_2.dat");
@@ -32,11 +30,12 @@ public class Controller {
     while(!(s1.isEndOfStream())){
       syncStream(s1,s2);
     }
-    System.out.println("S1 : " + s1count + " | S2 : " + s2count);
+    System.out.println("Streams parsed.");
     System.out.println("gps fixes : " + gps.size());
     for(GPSposition g : gps){
       System.out.println(g.toString());
     }
+    makeGPX("dataFiles/output.gpx");
   }
 
   public void parseSentence(Stream stream){
@@ -105,17 +104,17 @@ public class Controller {
   private void checkForNewFix(){
     if(s1.getFixtype()== FixType.GOOD_FIX){
       makeGPSfix(s1);
-      s1count++;
+
     }else if(s2.getFixtype()== FixType.GOOD_FIX){
       makeGPSfix(s2);
-      s2count++;
+
     }else{
       if(s1.getFixtype()== FixType.MIN_FIX){
         makeGPSfix(s1);
-        s1count++;
+
       }else if(s2.getFixtype()== FixType.MIN_FIX){
         makeGPSfix(s2);
-        s2count++;
+
       }
     }
   }
@@ -142,7 +141,9 @@ public class Controller {
   }
 
 
-
+  private void makeGPX(String filename){
+    GPXmaker gpx = new GPXmaker(gps, filename);
+  }
 
 
 
