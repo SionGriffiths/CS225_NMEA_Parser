@@ -27,17 +27,19 @@ public class GPSposition {
     return time.getTime() +  ", " + lat + ", " + lng + ", " + elevation;
   }
 
-  public String GPXoutput(){
-    StringBuffer sb = new StringBuffer();
+  public StringBuffer GPXoutput(StringBuffer sb){
 
+    sb = formatLatLong(sb);
+    sb = formatElev(sb);
     sb = formatTimeOutput(sb);
+    sb.append("</wpt>\n");
 
 
-    return sb.toString();
+    return sb;
   }
 
-  public StringBuffer formatTimeOutput(StringBuffer sb){
-
+  private StringBuffer formatTimeOutput(StringBuffer sb){
+    sb.append("<time>");
     sb.append(time.get(Calendar.YEAR));
     sb.append("-");
     sb.append(time.get(Calendar.MONTH)+1);
@@ -50,7 +52,29 @@ public class GPSposition {
     sb.append(":");
     sb.append(time.get(Calendar.SECOND));
     sb.append("Z");
-    
+    sb.append("</time> \n");
+
+
     return sb;
   }
+
+  private StringBuffer formatElev(StringBuffer sb){
+    sb.append("<ele>");
+    sb.append(elevation);
+    sb.append("</ele> \n");
+
+    return sb;
+  }
+
+  private StringBuffer formatLatLong(StringBuffer sb){
+
+    sb.append("<wpt lat=\"");
+    sb.append(lat);
+    sb.append("\" lon=\"");
+    sb.append(lng);
+    sb.append("\"> \n");
+
+    return sb;
+  }
+
 }
