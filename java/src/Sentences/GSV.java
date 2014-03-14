@@ -47,15 +47,13 @@ public class GSV extends Sentence {
       }
 
     }
-    if(goodSNRcount >=3){
+
+    if(goodSNRcount >= 3){
       stream.setFixtype(FixType.GOOD_FIX);
     }else if(minSNRcount >= 3){
       stream.setFixtype(FixType.MIN_FIX);
     }else{
       stream.setFixtype(FixType.NO_FIX);
     }
-
-//    stream.setIsGoodFix(goodSNRcount >=3);
-
   }
 }

@@ -120,15 +120,6 @@ public class Controller {
     }
   }
 
-  private void calculateOffset(Stream stream1, Stream stream2){
-    float latOffset = stream1.getCurrentLat() - stream2.getCurrentLat();
-    float lngOffset = stream1.getCurrentLng() - stream2.getCurrentLng();
-    float elevOffset = stream1.getCurrentElev() - stream2.getCurrentElev();
-
-    stream2.updateLatLongOffest(latOffset, lngOffset);
-    stream2.updateElevOffset(elevOffset);
-  }
-
   private void makeGPSfix(Stream stream){
     if((lastFixTime == null) || (stream.getStreamTime().compareTo(lastFixTime) > 0)){
       gps.add(stream.makeGPS());
@@ -140,6 +131,17 @@ public class Controller {
   private void updateFixTime(Stream stream){
     lastFixTime = (Calendar)stream.getStreamTime().clone();
   }
+
+  private void calculateOffset(Stream stream1, Stream stream2){
+    float latOffset = stream1.getCurrentLat() - stream2.getCurrentLat();
+    float lngOffset = stream1.getCurrentLng() - stream2.getCurrentLng();
+    float elevOffset = stream1.getCurrentElev() - stream2.getCurrentElev();
+
+    stream2.updateLatLongOffest(latOffset, lngOffset);
+    stream2.updateElevOffset(elevOffset);
+  }
+
+
 
 
 
