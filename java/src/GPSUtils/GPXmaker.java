@@ -3,6 +3,7 @@ package GPSUtils;
 import java.io.*;
 import java.util.ArrayList;
 
+
 /**
  * Created by sig2 on 14/03/14.
  */
@@ -37,6 +38,7 @@ public class GPXmaker {
   private String buildGPX() {
     StringBuffer sb = new StringBuffer();
     sb = headerString(sb);
+    sb = findBounds(sb);
     for(GPSposition g : gps){
       sb = g.GPXoutput(sb);
     }
@@ -52,7 +54,7 @@ public class GPXmaker {
     sb.append("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n");
     sb.append(" xmlns=\"http://www.topografix.com/GPX/1/0\" \n");
     sb.append(" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\"> \n");
-    sb.append("<bounds minlat=\"42.401051\" minlon=\"-71.126602\" maxlat=\"42.468655\" maxlon=\"-71.102973\"/>\n");
+
     return sb;
   }
 
@@ -61,4 +63,49 @@ public class GPXmaker {
     return footer;
   }
 
+  private StringBuffer findBounds(StringBuffer sb){
+    float minlat = 91;
+    float minlong = 181;
+    float maxlat = -91;
+    float maxlong = -181;
+
+    for(GPSposition g : gps){
+      if(minlat > g.getLat()){
+        minlat = g.getLat();
+      }
+      if(minlong > g.getLng()){
+        minlong = g.getLng();
+      }
+      if(maxlat < g.getLat()){
+        maxlat = g.getLat();
+      }
+      if(maxlong < g.getLng()){
+        maxlong = g.getLng();
+      }
+    }
+
+    sb.append("<bounds minlat=\""+minlat+"\" minlon=\""+minlong+"\" maxlat=\""+maxlat+"\" maxlon=\""+maxlong+"\"/>\n");
+
+    return sb;
+  }
+
 }
+/*public static int[] getMinMax(Comparable[] items){
+    Comparable min = null;
+    Comparable max = null;
+
+    for(Comparable i : items){
+      if(min == null || i.compareTo(min) < 0){
+        min = i;
+      }
+      if(max == null || i.compareTo(max) > 0){
+        max = i;
+      }
+    }
+    int[] minmax = new int[2];
+
+    minmax[0] = Integer.parseInt(min.toString());
+    minmax[1] =  Integer.parseInt(max.toString());
+    return minmax;
+  }
+*/
