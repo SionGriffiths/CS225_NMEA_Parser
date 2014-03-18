@@ -30,6 +30,13 @@ public class RMC extends Sentence {
   public void makeGPSposition(){
     lat = Float.parseFloat(sentenceData[3]);
     lng = Float.parseFloat(sentenceData[5]);
+
+    if(sentenceData[6].equals("W")){
+      lng *= -1;
+    }
+    if(sentenceData[4].equals("S")){
+      lat *= -1;
+    }
     lat /= 100;
     lng /= 100;
   }

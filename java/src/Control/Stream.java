@@ -21,7 +21,7 @@ public class Stream {
   private FileParser fp;
   private Calendar streamTime;
 
-  private boolean goodFix = true;
+
   private boolean GSAfix;
   private boolean endOfStream = false;
 
@@ -112,15 +112,7 @@ public class Stream {
   public void setGSAfix(boolean gsaFix){
     GSAfix = gsaFix;
   }
-  public boolean isGSAfix(){
-    return GSAfix;
-  }
-  /*public boolean isGoodFix(){
-    return goodFix;
-  }
-  public void setIsGoodFix(boolean fix){
-    goodFix = fix;
-  }*/
+
   public void setFixtype(FixType fixtype){
     this.fixtype = fixtype;
   }
