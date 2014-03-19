@@ -67,3 +67,20 @@ void init_list(list_ptr * list) {
 node_ptr get_head(list_ptr * list) {
   return (*list) -> head;
 }
+
+/**
+ * Function returns the number of elements in a linked list
+ * @param list the linked list
+ * @return the number of elements
+ */
+int get_length(list_ptr * list){
+  node_ptr iterator = (*list) -> head;
+  int count = 0;
+  
+  while(iterator != NULL){
+    iterator = iterator -> next;
+    count ++;
+  }
+  
+  return count;
+}

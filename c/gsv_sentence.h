@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-       void make_gsv(list_ptr in_sentence, FILE * file);
+       int make_gsv(list_ptr in_sentence, FILE * file);
 
 #ifdef	__cplusplus
 }

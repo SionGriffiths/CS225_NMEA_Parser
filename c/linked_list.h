@@ -21,19 +21,19 @@ extern "C" {
      * A structure to represent a node in the list
      */
     typedef struct link_node {
-        void* node_data;  
-        struct link_node * next; 
+        void* node_data;
+        struct link_node * next;
     } node;
 
     /**
      * A structure to represent a linked list
      */
     typedef struct node_list {
-        node* head; 
-        node* tail; 
+        node* head;
+        node* tail;
     } linked_list;
 
-    
+
     typedef node * node_ptr;
     typedef linked_list * list_ptr;
 
@@ -66,6 +66,13 @@ extern "C" {
      * @return pointer to node at head
      */
     node_ptr get_head(list_ptr * list);
+
+    /**
+     * Function returns the number of elements in a linked list
+     * @param list the linked list
+     * @return the number of elements
+     */
+    int get_length(list_ptr * list);
 
 #ifdef	__cplusplus
 }
