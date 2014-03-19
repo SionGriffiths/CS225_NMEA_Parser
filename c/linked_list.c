@@ -1,17 +1,19 @@
-/* 
- * File:   linked_list.c
- * Author: sig2
+/**
+ * @file   linked_list.h
+ * @Author Sion Griffiths (sig2@aber.ac.uk)
+ * @date   December 2013
+ * @brief  Specifies linked list functionality
  * 
- * Description : Specifies linked list functionality. Initialises nodes and lists
- * and defines how nodes are added to lists.
- *               
- * Created December 2013
+ * Initialises nodes and lists and defines how nodes are added to lists.
  */
 
 #include "linked_list.h"
 #include <stdlib.h>
 
-/*Adds the passed in node to the list, list also passed via parameter
+/**
+ * Adds a node to a linked list
+ * @param to_add pointer to node that's to be added
+ * @param list pointer to the list that the node will be added to
  */
 void add_to_list(node_ptr * to_add, list_ptr * list) {
 
@@ -23,7 +25,7 @@ void add_to_list(node_ptr * to_add, list_ptr * list) {
     (*list)->tail = (*to_add);
 
   } else {
-    
+
     /*Hold the current tail, add the new node to it's next,
      set tail to be the new node.*/
     node * old_tail = (*list)->tail;
@@ -34,8 +36,11 @@ void add_to_list(node_ptr * to_add, list_ptr * list) {
 
 }
 
-/*Initialises a node; allocates memory, populates the node with 
+/**
+ * Initialises a node; allocates memory, populates the node with 
  * passed in data, set default values.
+ * @param new_node pointer to the node to be initialised
+ * @param in_data data content for node
  */
 void init_node(node_ptr * new_node, void* in_data) {
   (*new_node) = calloc(1, sizeof (struct link_node));
@@ -43,11 +48,22 @@ void init_node(node_ptr * new_node, void* in_data) {
   (*new_node)->node_data = in_data;
 }
 
-/*Initialises a linked list; allocates memory and set
- default values
+/**
+ * Initialises a linked list; allocates memory and set
+ * default values
+ * @param list pointer to list to be initialised
  */
 void init_list(list_ptr * list) {
   (*list) = calloc(1, sizeof (struct node_list));
   (*list)->head = NULL;
   (*list)->tail = NULL;
+}
+
+/**
+ * Returns a pointer to the node at the head of a list
+ * @param list pointer to the list
+ * @return pointer to node at head
+ */
+node_ptr get_head(list_ptr * list) {
+  return (*list) -> head;
 }

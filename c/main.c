@@ -9,54 +9,92 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "file_reader.h"
+#include "sentence.h"
+#include "linked_list.h"
+#include "rmc_sentence.h"
+#include "gga_sentence.h"
+#include "gsv_sentence.h"
+#include "shared_temp_debug.h"
+//static int count =0;
 
-/*
- * 
- */
+list_ptr parseSentence(sentence_ptr sentence_in);
+void update(list_ptr sentence_tokens, FILE * gps_file);
 
-void parseSentence(sent_ptr sentence_in);
+int line_count = 0;
 
 int main(int argc, char** argv) {
 
-    FILE *gps_1 = fopen("gps_1.dat", "r");
-    FILE *gps_2 = fopen("gps_2.dat", "r");
-    
-    if(gps_1 == NULL || gps_2 == NULL){
-      printf("Missing stream file. Aborting.");
-      return (1);
-    }
-    
-//    int count1 = 0;
-//    int count2 = 0;
-    sent_ptr sentence_in;
-    while (((sentence_in = read_sentence(gps_1))) != NULL){
-//      count1++;
-      parseSentence(sentence_in);
-    }
-//    while ((read_sentence(gps_2)) != NULL){
-//      count2++;
-//    }
-    
-//    printf("Lines in file1 : %d \nLines in file2 : %d", count1, count2);
-    
-//    while (make_stream_list("gps_1.dat") == 0);
-//    while (make_stream_list("gps_2.dat") == 0);
+  FILE *gps_1 = fopen("gps_1.dat", "r");
+  FILE *gps_2 = fopen("gps_2.dat", "r");
+  list_ptr gps_list;
+
+
+  if (gps_1 == NULL || gps_2 == NULL) {
+    printf("Missing stream file. Aborting.");
+    return (EXIT_FAILURE);
+  }
+
+
+  sentence_ptr sentence_in;
+  while (((sentence_in = read_sentence(gps_2))) != NULL) {
+    update(parseSentence(sentence_in), gps_2);
+    line_count++;
+  }
   
-    fclose(gps_1);
-    fclose(gps_2);
-  
-    return (EXIT_SUCCESS);
+
+  fclose(gps_1);
+  fclose(gps_2);
+  printf("%d", line_count);
+  return (EXIT_SUCCESS);
 }
 
-void parseSentence(sent_ptr sentence_in){
-  char *data, *outTemp;
-  data = sentence_in->sentenceData;
+
+
+
+void update(list_ptr sentence_tokens, FILE * gps_file) {
+
+  char * type = get_head(&sentence_tokens)->node_data;
   
-  while((outTemp = strsep(&data, ",*")) != NULL){
-    printf("%s | ", outTemp);
+  if ((strcmp(type, "$GPGSV") == 0)) {
+    make_gsv(sentence_tokens, gps_file);
+
+  } else if ((strcmp(type, "$GPGGA") == 0)) {
+    gga_set_latlong(sentence_tokens);
+
+  } else if (((strcmp(type, "$GPRMC") == 0))) {
+    rmc_set_latlong(sentence_tokens);
   }
-  printf("\n");
-  
-//  return strsep(&data, ",");
 }
+
+
+
+
+//  list_ptr temp;
+//  sentence_in = read_sentence(gps_1);
+//  temp = parseSentence(sentence_in);
+//
+//
+//  node_ptr iterator = get_head(&temp);
+//  if (strcmp(iterator->node_data, "$GPGSA") == 0) {
+//    printf("willies \n");
+//  }
+//
+//
+//  while (iterator != NULL) {
+//    printf("%s ", (char*) iterator->node_data);
+//    iterator = iterator -> next;
+//  }
+
+
+//node_ptr iterator = get_head(&sentence_tokens);
+//    if (strcmp(iterator->node_data, "$GPGSA") == 0) {
+//      printf("willies \n");
+//    }
+//
+//    int count = 0;
+//    while (iterator != NULL) {
+//      printf("%d %s \n", count, (char*) iterator->node_data);
+//      iterator = iterator -> next;
+//      count++;
+//    }
+
