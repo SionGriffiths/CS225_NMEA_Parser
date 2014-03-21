@@ -27,6 +27,12 @@ public class GGA extends Sentence {
   public void makeGPSposition(){
     lat = Float.parseFloat(sentenceData[2]);
     lng = Float.parseFloat(sentenceData[4]);
+    if(sentenceData[5].equals("W")){
+      lng *= -1;
+    }
+    if(sentenceData[3].equals("S")){
+      lat *= -1;
+    }
     elevation = Float.parseFloat(sentenceData[9]);
     lat /= 100;
     lng /= 100;
