@@ -34,7 +34,7 @@ public class GGA extends Sentence {
       lat *= -1;
     }
     elevation = Float.parseFloat(sentenceData[9]);
-    
+
   }
 
   @Override
