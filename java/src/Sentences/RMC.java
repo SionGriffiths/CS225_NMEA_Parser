@@ -37,8 +37,7 @@ public class RMC extends Sentence {
     if(sentenceData[4].equals("S")){
       lat *= -1;
     }
-    lat /= 100;
-    lng /= 100;
+
   }
 
   @Override
