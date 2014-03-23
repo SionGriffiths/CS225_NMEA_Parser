@@ -9,17 +9,23 @@ import java.util.Calendar;
  */
 public class GPSposition {
 
-  private float lat;
-  private float lng;
-  private float elevation;
-  private Calendar time;
+  private final float lat;
+  private final float lng;
+  private final float elevation;
+  private final Calendar time;
 
   public GPSposition(float lat, float lng, float elevation, Object time ){
 
-    this.lat = lat;
-    this.lng = lng;
+    this.lat = nmeaToDecimalDegress(lat);
+    this.lng = nmeaToDecimalDegress(lng);
     this.elevation = elevation;
     this.time = (Calendar)time;
+  }
+
+  public float nmeaToDecimalDegress(float nmea){
+    int D = (int)(nmea / 100);
+    float m = nmea - (D * 100);
+    return D+(m/60);
   }
 
 
@@ -80,24 +86,10 @@ public class GPSposition {
     return lng;
   }
 
-  public void setLng(float lng) {
-    this.lng = lng;
-  }
-
   public float getLat() {
     return lat;
   }
 
-  public void setLat(float lat) {
-    this.lat = lat;
-  }
 
-  public float getElevation() {
-    return elevation;
-  }
-
-  public void setElevation(float elevation) {
-    this.elevation = elevation;
-  }
 
 }

@@ -5,11 +5,13 @@ import java.util.ArrayList;
 
 
 /**
- * Created by sig2 on 14/03/14.
- */
+ * @author Siôn Griffiths - sig2@aber.ac.uk
+ * Date: 14/03/14
+ * Time: 09:01
+  */
 public class GPXmaker {
 
-  private ArrayList<GPSposition> gps;
+  private final ArrayList<GPSposition> gps;
 
 
 
@@ -28,6 +30,7 @@ public class GPXmaker {
       e.printStackTrace();
     } finally {
       try {
+        assert writer != null;
         writer.close();
       } catch (Exception e) {
         e.printStackTrace();
@@ -59,8 +62,8 @@ public class GPXmaker {
   }
 
   private String footerString(){
-    String footer = "</gpx>";
-    return footer;
+
+    return  "</gpx>";
   }
 
   private StringBuffer findBounds(StringBuffer sb){
@@ -84,7 +87,7 @@ public class GPXmaker {
       }
     }
 
-    sb.append("<bounds minlat=\""+minlat+"\" minlon=\""+minlong+"\" maxlat=\""+maxlat+"\" maxlon=\""+maxlong+"\"/>\n");
+    sb.append("<bounds minlat=\"").append(minlat).append("\" minlon=\"").append(minlong).append("\" maxlat=\"").append(maxlat).append("\" maxlon=\"").append(maxlong).append("\"/>\n");
 
     return sb;
   }

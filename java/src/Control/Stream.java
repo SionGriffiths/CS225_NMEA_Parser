@@ -18,13 +18,11 @@ import java.util.GregorianCalendar;
  */
 public class Stream {
 
-  private FileParser fp;
+  private final FileParser fp;
   private Calendar streamTime;
 
-
-  private boolean GSAfix;
   private boolean endOfStream = false;
-
+  private boolean GSAfix = false;
   private String currentTime;
   private String currentDate;
 
@@ -46,12 +44,9 @@ public class Stream {
 
   private void initTime(){
     streamTime = new GregorianCalendar();
-//  lastFixTime = new GregorianCalendar();
-//  init with debug values
     currentTime = "110203";
     currentDate = "040506";
     updateTime(streamTime);
-//  updateTime(lastFixTime);
   }
 
   public void updateTime(Calendar timeToUpdate){
@@ -73,7 +68,7 @@ public class Stream {
     if((retValue = fp.readLine())==null){
       endOfStream = true;
     }
-      return retValue;
+    return retValue;
   }
 
   public boolean isEndOfStream(){
