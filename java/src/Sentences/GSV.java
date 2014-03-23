@@ -10,14 +10,29 @@ import java.util.ArrayList;
  * @author Siôn Griffiths - sig2@aber.ac.uk
  *         Date: 09/03/14
  *         Time: 12:37
+ *
+ * The GSV class extracts accurate fix quality from an NMEA GSA sntance
+ * The fixquality return is used to decide whether a fix should be taken
  */
 public class GSV extends Sentence {
 
+  /**
+   * Constructs a GSV
+   * @param input array of tokenised NMEA sentence.
+   * @param stream The Stream instance containing the sentence
+   */
   public GSV(String[] input,  Stream stream){
     sentenceData = input;
     updateStream(stream);
   }
 
+  /**
+   * Updates the stream fix quality.
+   * GSV sentences come in batches of 1-3. Method extracts and
+   * parses extra sentences then counts the number of
+   * satellites with SNR values in given ranges.
+   * @param stream the Stream instance
+   */
   @Override
   protected void updateStream(Stream stream) {
 

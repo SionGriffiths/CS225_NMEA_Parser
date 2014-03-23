@@ -6,6 +6,10 @@ import java.util.Calendar;
  * @author Siôn Griffiths - sig2@aber.ac.uk
  *         Date: 09/03/14
  *         Time: 12:51
+ * The GPSposition class holds information about a single GPS fix.
+ * With standard coordinates, elevation and time detail.
+ * Methods are implemented to facilitate the setting of these fields
+ * and format their output to file.
  */
 public class GPSposition {
 
@@ -14,6 +18,14 @@ public class GPSposition {
   private final float elevation;
   private final Calendar time;
 
+  /**
+   * Constructs a GPSposition from parameter data. Converts lat/long representations
+   * from NMEA to more standard format.   *
+   * @param lat latitude
+   * @param lng longitude
+   * @param elevation elevation
+   * @param time time
+   */
   public GPSposition(float lat, float lng, float elevation, Object time ){
 
     this.lat = nmeaToDecimalDegress(lat);
@@ -22,6 +34,12 @@ public class GPSposition {
     this.time = (Calendar)time;
   }
 
+  /**
+   * Converts lat/long representations
+   * from NMEA to more standard format.
+   * @param nmea the nmea coordinate to be converted
+   * @return the converted value
+   */
   public float nmeaToDecimalDegress(float nmea){
     int D = (int)(nmea / 100);
     float m = nmea - (D * 100);
@@ -29,10 +47,11 @@ public class GPSposition {
   }
 
 
-  public String toString(){
-    return time.getTime() +  ", " + lat + ", " + lng + ", " + elevation;
-  }
-
+  /**
+   * Adds formatted GPS data to StringBuffer for XML output
+   * @param sb StringBuffer instance
+   * @return the StringBuffer instance
+   */
   public StringBuffer GPXoutput(StringBuffer sb){
 
     sb = formatLatLong(sb);
@@ -44,6 +63,12 @@ public class GPSposition {
     return sb;
   }
 
+  /**
+   * Adds formatted time representation to StringBuffer for XML
+   * output
+   * @param sb StringBuffer instance
+   * @return the StringBuffer instance
+   */
   private StringBuffer formatTimeOutput(StringBuffer sb){
     sb.append("<time>");
     sb.append(time.get(Calendar.YEAR));
@@ -64,6 +89,11 @@ public class GPSposition {
     return sb;
   }
 
+  /**
+   * Formats elevation for XML output
+   * @param sb StringBuffer instance
+   * @return the StringBuffer instance
+   */
   private StringBuffer formatElev(StringBuffer sb){
     sb.append("<ele>");
     sb.append(elevation);
@@ -72,6 +102,11 @@ public class GPSposition {
     return sb;
   }
 
+  /**
+   * Formats lat/long for XML output
+   * @param sb StringBuffer instance
+   * @return the StringBuffer instance
+   */
   private StringBuffer formatLatLong(StringBuffer sb){
 
     sb.append("<wpt lat=\"");
@@ -90,6 +125,8 @@ public class GPSposition {
     return lat;
   }
 
-
+  public String toString(){
+    return time.getTime() +  ", " + lat + ", " + lng + ", " + elevation;
+  }
 
 }

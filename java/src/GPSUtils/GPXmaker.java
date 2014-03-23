@@ -8,18 +8,31 @@ import java.util.ArrayList;
  * @author Siôn Griffiths - sig2@aber.ac.uk
  * Date: 14/03/14
  * Time: 09:01
+ *
+ * The GPXmaker class facilitates the creation of a formatted XML file
+ * to output all corrected GPS positions.
   */
 public class GPXmaker {
 
+  /**
+   * List of GPS positions
+   */
   private final ArrayList<GPSposition> gps;
 
-
-
+  /**
+   * Constructs a GPXmaker.
+   * @param gps List of gps positions
+   * @param fileName name of output file.
+   */
   public GPXmaker(ArrayList<GPSposition> gps, String fileName){
     this.gps = gps;
     makeGPX(fileName);
   }
 
+  /**
+   * Writes to the gpx output file
+   * @param fileName the file name
+   */
   public void makeGPX(String fileName){
     Writer writer = null;
     try {
@@ -38,6 +51,11 @@ public class GPXmaker {
     }
   }
 
+  /**
+   * Appends to a StringBuffer the correctly formatted
+   * data including headers. A complete gpx file will be returned.
+   * @return a StringBuffer instance containing a complete GPX formatted output string.
+   */
   private String buildGPX() {
     StringBuffer sb = new StringBuffer();
     sb = headerString(sb);
@@ -49,6 +67,11 @@ public class GPXmaker {
     return sb.toString();
   }
 
+  /**
+   * Appends a formatted header to the GPX file StringBuffer instance
+   * @param sb the StringBuffer instance
+   * @return the StringBuffer instance
+   */
   private StringBuffer headerString(StringBuffer sb){
     sb.append("<?xml version=\"1.0\"?> \n");
     sb.append("<gpx \n");
@@ -61,11 +84,22 @@ public class GPXmaker {
     return sb;
   }
 
+  /**
+   * Closing tag for the file
+   * @return "</gpx>"
+   */
   private String footerString(){
 
     return  "</gpx>";
   }
 
+  /**
+   * Finds smallest and highest values for latitude and longitude
+   * in the list of gps positions.
+   * Adds these values to the StringBuffer instance within formatting tags.
+   * @param sb the StringBuffer instance
+   * @return the StringBuffer instance
+   */
   private StringBuffer findBounds(StringBuffer sb){
     float minlat = 91;
     float minlong = 181;
@@ -93,22 +127,4 @@ public class GPXmaker {
   }
 
 }
-/*public static int[] getMinMax(Comparable[] items){
-    Comparable min = null;
-    Comparable max = null;
 
-    for(Comparable i : items){
-      if(min == null || i.compareTo(min) < 0){
-        min = i;
-      }
-      if(max == null || i.compareTo(max) > 0){
-        max = i;
-      }
-    }
-    int[] minmax = new int[2];
-
-    minmax[0] = Integer.parseInt(min.toString());
-    minmax[1] =  Integer.parseInt(max.toString());
-    return minmax;
-  }
-*/

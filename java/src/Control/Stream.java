@@ -15,11 +15,24 @@ import java.util.GregorianCalendar;
  * @author Siôn Griffiths - sig2@aber.ac.uk
  *         Date: 10/03/14
  *         Time: 17:57
+ *
+ * The Stream class holds all current information relating to a stream of parsed NMEA sentences.
+ * Implementing setters and getters for coordinates, time, stream quality, coordinate offsets
+ * and methods to calculate updates to these fields if required.
+ *
  */
 public class Stream {
 
+  /**
+   * The FileParser instance.
+   * Holds a reference to a file.
+   */
   private final FileParser fp;
+  /**
+   * Calendar instance to hold stream time and date.
+   */
   private Calendar streamTime;
+
 
   private boolean endOfStream = false;
   private boolean GSAfix = false;
@@ -35,13 +48,26 @@ public class Stream {
   private float elevOffset = 0;
 
   public FixType fixtype = FixType.NO_FIX;
+  /**
+   * line counter - debug.
+   */
   public int count = 0;
 
+  /**
+   * Constructs a Stream. Takes a file name as parameter,
+   * creates a FileParser to access file content.
+   * Initialises stream time with default values.
+   * @param fileName the file name
+   */
   public Stream(String fileName){
     fp = new FileParser(fileName);
     initTime();
   }
 
+  /**
+   * Instantiates a calendar instance and initialises
+   * it with default values for time and date
+   */
   private void initTime(){
     streamTime = new GregorianCalendar();
     currentTime = "110203";
@@ -49,6 +75,10 @@ public class Stream {
     updateTime(streamTime);
   }
 
+  /**
+   * Updates the current time.
+   * @param timeToUpdate a new time
+   */
   public void updateTime(Calendar timeToUpdate){
 
     SimpleDateFormat df = new SimpleDateFormat("ddMMyy HHmmss");
@@ -62,6 +92,10 @@ public class Stream {
 
   }
 
+  /**
+   * Method to retrieve the next line in a file.
+   * @return The line from file.
+   */
   public String getNext(){
     String retValue;
 
@@ -71,6 +105,24 @@ public class Stream {
     return retValue;
   }
 
+  /**
+   * Creates a GPSposition based on current stream state.
+   * Applies offsets to lat/long/elevation.
+   * @return the GPSposition
+   */
+  public GPSposition makeGPS(){
+    currentLat += latOffset;
+    currentLng += lngOffset;
+    currentElev += elevOffset;
+    GPSposition gps = new GPSposition(currentLat, currentLng, currentElev, streamTime.clone());
+
+    return gps;
+  }
+
+
+  ////---------------------------------------
+  //          SETTERS & GETTERS
+  ////---------------------------------------
   public boolean isEndOfStream(){
     return endOfStream;
   }
@@ -92,14 +144,6 @@ public class Stream {
     this.elevOffset = elevOffset;
   }
 
-  public GPSposition makeGPS(){
-    currentLat += latOffset;
-    currentLng += lngOffset;
-    currentElev += elevOffset;
-    GPSposition gps = new GPSposition(currentLat, currentLng, currentElev, streamTime.clone());
-
-    return gps;
-  }
   public Calendar getStreamTime(){
     return streamTime;
   }
