@@ -11,10 +11,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "linked_list.h"
 #include "sentence.h"
-
+#include "stream.h"
+#include "shared_temp_debug.h"
 
 
 
@@ -24,7 +26,7 @@
  * @param input_file pointer to file
  * @return pointer to sentence struct
  */
-sentence_ptr read_sentence(FILE *input_file) {
+sentence_ptr read_sentence(stream_ptr stream) {
 
   int read_status;
   sentence * in_sentence;
@@ -32,12 +34,13 @@ sentence_ptr read_sentence(FILE *input_file) {
   in_sentence = calloc(1, sizeof (struct sentence_Str));
 
 
-  read_status = fscanf(input_file, "%s",
+  read_status = fscanf(stream->stream_file, "%s",
           in_sentence->sentenceData);
   
   
 
   if (read_status == EOF) {
+    stream->eof = true;
     return NULL;
   } else if (read_status != 1) {
     printf("Sentence data looks wrong or corrupt \n Read status returned %d", read_status);
@@ -69,7 +72,7 @@ list_ptr parseSentence(sentence_ptr sentence_in){
     add_to_list(&sentence_segment, &temp_list);
     
   }
-  
+  line_count++;
   return temp_list;
 
 }

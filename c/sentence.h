@@ -11,6 +11,7 @@
 #ifndef FILE_READER_H
 #define	FILE_READER_H
 #include "linked_list.h"
+#include "stream.h"
 #include <stdio.h>
 
 #ifdef	__cplusplus
@@ -28,12 +29,12 @@ extern "C" {
 
 
     /**
-     * Function to read a single line from file and create
+     * Function to read a single line from stream and create
      * a sentence struct
-     * @param input_file pointer to file
+     * @param input_file pointer to stream
      * @return pointer to sentence struct
      */
-    sentence_ptr read_sentence(FILE *input_file);
+    sentence_ptr read_sentence(stream_ptr stream);
 
     /**
      * Function to parse NMEA sentence strings 

@@ -1,5 +1,5 @@
 /**
- * @file   linked_list.h
+ * @file   linked_list.c
  * @Author Sion Griffiths (sig2@aber.ac.uk)
  * @date   December 2013
  * @brief  Specifies linked list functionality
